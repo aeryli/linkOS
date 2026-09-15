@@ -1,0 +1,44 @@
+name: Web Build
+
+on:
+  workflow_run:
+    workflows: ["Continuous Build", "Build and Release"]
+    types:
+      - completed
+
+jobs:
+  web-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set Release Name
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "RELEASE_NAME=${{ github.event.inputs.release_name }}" >> $GITHUB_ENV
+          else
+            echo "RELEASE_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+          
+      - name: Build project
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            npm run build -- `${ github.event.inputs.release_name }`
+          else
+            npm run build -- `${ github.ref_name }`
+          fi
