@@ -1,4 +1,4 @@
-# linkOS
+# linkOS (not zebra’s)
 
 [Link to the video](https://youtu.be/4DE3MBMngz8)
 
