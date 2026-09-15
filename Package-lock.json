@@ -7,7 +7,12 @@
     "": {
       "name": "linkos",
       "version": "1.0.0",
-      "dependencies": {}
+      "dependencies": {
+        "build": "node tools/build.js",
+        "build:dev": "node tools/build.js --dev",
+        "build:empty": "node tools/build.js --empty-rootfs",
+        "build:rootfs": "node tools/build.js --rootfs"
+      }
     }
   }
 }
