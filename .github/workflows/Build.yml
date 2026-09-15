@@ -1,6 +1,8 @@
 name: Web Build
 
 on:
+  workflow_dispatch:
+  
   workflow_run:
     workflows: ["Continuous Build", "Build and Release"]
     types:
