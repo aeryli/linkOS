@@ -18,8 +18,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          # Removed the automatic caching option that triggers the lockfile error
 
-      # Generates a fresh package-lock.json and installs dependencies
+      # This creates the package-lock.json and installs your packages
       - name: Generate package-lock and install
         run: npm install
 
